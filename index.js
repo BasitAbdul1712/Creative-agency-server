@@ -36,7 +36,7 @@ client.connect(err => {
     const addReview = client.db("CreativeAgency").collection("reviews");
     const addServices = client.db("CreativeAgency").collection("addServices");
     const addAdmin = client.db("CreativeAgency").collection("admin");
-
+    const addMessage = client.db("CreativeAgency").collection("message");
 
 
     app.get('/service', (req, res) => {
@@ -170,7 +170,16 @@ app.post('/isAdmin', (req, res) => {
             res.send(admins.length > 0)
         })
 })
-    
+
+app.post('/addMessage', (req, res) => {
+    const message = req.body;
+    addMessage.insertOne(message)
+        .then(result => {
+            // console.log(result);
+            console.log(result.insertedCount);
+            res.send(result.insertedCount > 0);
+        })
+})
 
 });
 
